@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>DIDIN SHOP - DIDIN SHOP</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles -->
+    <link href="css/shop-item.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">DIDIN STORE</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="colection.html">Colection</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="page container">
+
+        <div class="row">
+
+            <div class="col-lg-3">
+                <h1 class="my-4">Colection</h1>
+                <div class="list-group" id="category"></div>
+
+                <canvas id="speedChart" width="600" height="400"></canvas>
+            </div>
+            <!-- /.col-lg-3 -->
+
+            <div class="col-lg-9" id="product-list"></div>
+            <!-- /.col-lg-9 -->
+
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; didin store 2018</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script type="text/javascript">
+    </script>
+    <script type="text/javascript">
+    var categories = [
+        {kategori: "Semua Kategori", slug: "all"},
+    ];
+    var products = [
+        {nama: "Baju Kemeja Murah", category: "pakaian", harga:120000, rate: 4, description: "Kemeja Putih Ukuran M, L, XL", image: "images/hem.png"},
+        {nama: "Keyboard Gaming", category: "komputer", harga:850000, rate: 5, description: "cocok untuk gamers bermain moba bukan analog", image: "images/keyboard.jpg"},
+        {nama: "Mouse", category: "komputer", harga:150000, rate: 3, description: "cocok untuk parah gamers", image: "images/mouse.jpg"},
+        {nama: "Zara", category: "celana", harga:70000, rate: 4, description: "Celana kain zara ukuran 27-32", image: "images/zara.jpg"}
+    ];
+    $(document).ready(function(){
+        $.fn.listProduct = function(category){
+            $("#product-list").html("");
+            for(var i=0; i<products.length; i++){
+                if((category != products[i].category) && category != "all") continue;
+                var rate = "";
+                for(var s=0; s<5; s++) {
+                    rate += products[i].rate > s ? "&#9733;" : "&#9734";
+                }
+                var html = '<div class="card mt-4">';
+                html    +=      '<img class="card-img-top img-fluid" src="' + products[i].image + '" alt="">';
+                html    +=      '<div class="card-body">';
+                html    +=          '<h3 class="card-title">' + products[i].nama + '</h3>';
+                html    +=          '<h4>Rp.' + products[i].harga + '</h4>';
+                html    +=          '<p class="card-text">' + products[i].description + '</p>';
+                html    +=          '<span class="text-warning">' + rate + '</span>';
+                html    +=          products[i].rate + ' stars';
+                html    +=      '</div>';
+                html    += '</div>';
+                $("#product-list").append(html);
+            }
+        }
+        $.fn.listProduct("all");
+        for(var i=0; i<categories.length; i++){
+            var isActive = categories[i].slug == "all" ? "active" : "";
+            $("#category").append('<a href="#" class="list-group-item category-item ' + isActive + '" data-category="' + categories[i].slug + '">' + categories[i].kategori + '</a>');
+        }
+        $(".category-item").click(function(){
+            $(".category-item").removeClass("active");
+            $.fn.listProduct($(this).data("category"));
+            $(this).addClass("active");
+        })
+    })
+
+    </script>
+
+</body>
+
+</html>
